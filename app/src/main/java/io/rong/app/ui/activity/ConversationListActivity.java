@@ -117,7 +117,7 @@ public class ConversationListActivity extends BaseApiActivity {
                     RongCloudEvent.getInstance().setOtherListener();
 
                 if (DemoContext.getInstance() != null)
-                    mGetMyGroupsRequest = DemoContext.getInstance().getDemoApi().getMyGroups(ConversationListActivity.this);
+                    mGetMyGroupsRequest = DemoContext.getInstance().getDemoApi().getMyGroups(DemoContext.getInstance().getSharedPreferences().getString(Constants.APP_USER_ID,Constants.DEFAULT),ConversationListActivity.this);
             }
 
             @Override

@@ -292,6 +292,7 @@ public class LoginActivity extends BaseApiActivity implements View.OnClickListen
                     edit.putString(Constants.APP_USER_NAME, user.getResult().getUsername());
                     edit.putString(Constants.APP_USER_PORTRAIT, user.getResult().getPortrait());
                     edit.putString(Constants.APP_TOKEN, user.getResult().getToken());
+                    edit.putString(Constants.APP_USER_ID, user.getResult().getId());
                     edit.putString(INTENT_PASSWORD, mPassWordEt.getText().toString());
                     edit.putString(INTENT_IMAIL, mUserNameEt.getText().toString());
                     edit.putBoolean("DEMO_ISFIRST", false);
@@ -339,13 +340,13 @@ public class LoginActivity extends BaseApiActivity implements View.OnClickListen
                             Log.d(TAG, "----connect onSuccess userId----:" + userId);
 
                             if (isFirst) {
-                                getUserInfoHttpRequest = DemoContext.getInstance().getDemoApi().getFriends(LoginActivity.this);
+                                getUserInfoHttpRequest = DemoContext.getInstance().getDemoApi().getFriends(userId,LoginActivity.this);
                                 DemoContext.getInstance().deleteUserInfos();
                             } else {
                                 final List<UserInfos> list = DemoContext.getInstance().loadAllUserInfos();
                                 if (list == null || list.size() == 0) {
                                     //请求网络
-                                    getUserInfoHttpRequest = DemoContext.getInstance().getDemoApi().getFriends(LoginActivity.this);
+                                    getUserInfoHttpRequest = DemoContext.getInstance().getDemoApi().getFriends(userId,LoginActivity.this);
                                 }
                             }
 
@@ -356,7 +357,7 @@ public class LoginActivity extends BaseApiActivity implements View.OnClickListen
                             RongCloudEvent.getInstance().setOtherListener();
 
                             //请求 demo server 获得自己所加入得群组。
-                            mGetMyGroupsRequest = DemoContext.getInstance().getDemoApi().getMyGroups(LoginActivity.this);
+                            mGetMyGroupsRequest = DemoContext.getInstance().getDemoApi().getMyGroups(userId,LoginActivity.this);
                         }
 
                         @Override
