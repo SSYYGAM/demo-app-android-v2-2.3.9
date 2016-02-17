@@ -87,7 +87,8 @@ public class GroupListFragment extends BaseFragment implements AdapterView.OnIte
             return;
 
         mGroupMap = DemoContext.getInstance().getGroupMap();
-        mGetAllGroupsRequest = DemoContext.getInstance().getDemoApi().getAllGroups(this);
+        String userid = DemoContext.getInstance().getSharedPreferences().getString(Constants.APP_USER_ID,"");//取出用户id
+        mGetAllGroupsRequest = DemoContext.getInstance().getDemoApi().getAllGroups(userid,this);
     }
 
 

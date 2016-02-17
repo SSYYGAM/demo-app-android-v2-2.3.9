@@ -40,7 +40,7 @@ import io.rong.imlib.model.UserInfo;
  */
 public class DemoApi extends BaseApi {
     //private static String HOST = "http://webim.demo.rong.io/";
-    private static String HOST = "http://192.168.1.106:8080/HttpWeb/";
+    private static String HOST = "http://192.168.1.107:8080/HttpWeb/";
     private final static String DEMO_LOGIN_EMAIL = "email_login";
     private final static String DEMO_LOGIN_EMAIL_TOKEN = "email_login_token";
     private final static String DEMO_REQ = "reg";
@@ -257,9 +257,10 @@ public class DemoApi extends BaseApi {
      * @param callback
      * @return
      */
-    public AbstractHttpRequest<Groups> getAllGroups(ApiCallback<Groups> callback) {
-
-        ApiReqeust<Groups> apiReqeust = new DefaultApiReqeust<Groups>(ApiReqeust.GET_METHOD, URI.create(HOST + DEMO_GET_ALL_GROUP), callback);
+    public AbstractHttpRequest<Groups> getAllGroups(String userid,ApiCallback<Groups> callback) {
+        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        nameValuePairs.add(new BasicNameValuePair("userid", userid ));
+        ApiReqeust<Groups> apiReqeust = new DefaultApiReqeust<Groups>(ApiReqeust.POST_METHOD, URI.create(HOST + DEMO_GET_ALL_GROUP), nameValuePairs, callback);
         AbstractHttpRequest<Groups> httpRequest = apiReqeust.obtainRequest(new GsonParser<Groups>(Groups.class), mAuthType);
         NetworkManager.getInstance().requestAsync(httpRequest);
 
