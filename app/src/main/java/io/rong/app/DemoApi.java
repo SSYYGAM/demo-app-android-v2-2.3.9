@@ -41,6 +41,7 @@ import io.rong.imlib.model.UserInfo;
 public class DemoApi extends BaseApi {
     //private static String HOST = "http://webim.demo.rong.io/";
     private static String HOST = "http://192.168.1.107:8080/HttpWeb/";
+    //private static String HOST = "http://182.61.23.167:8081/HttpWeb/";
     private final static String DEMO_LOGIN_EMAIL = "email_login";
     private final static String DEMO_LOGIN_EMAIL_TOKEN = "email_login_token";
     private final static String DEMO_REQ = "reg";

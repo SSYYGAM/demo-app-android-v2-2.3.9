@@ -1,3 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
 
+    <item
+        jar="E:\AndroidStudyProject\demo-app-android-v2-2.3.9\app\src\main\libs\BmobSMS_V1.0.1_20150710.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="df9db564e2842696a68deca39b0186aebf3dc07c">
+        <dex dex="E:\AndroidStudyProject\demo-app-android-v2-2.3.9\app\build\intermediates\pre-dexed\debug\BmobSMS_V1.0.1_20150710_20719a398840c2396e704f8ac6fb2c739bf15b03.jar" />
+    </item>
+
+</items>

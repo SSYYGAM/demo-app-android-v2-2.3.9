@@ -170,6 +170,42 @@
             </FrameLayout>
         </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="22dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="10dp"
+            android:padding="8dp">
+
+            <EditText
+                android:id="@+id/et_register_telephone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/rc_ed_public_service_search_selector"
+                android:gravity="left|center_vertical"
+                android:hint="@string/register_input_nickname"
+                android:singleLine="true"
+                android:textColor="@android:color/white" />
+
+            <FrameLayout
+                android:id="@+id/et_telephone_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/et_register_telephone"
+                android:layout_centerVertical="true"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:src="@drawable/de_register_delete" />
+            </FrameLayout>
+
+        </RelativeLayout>
 
         <Button
             android:id="@+id/register_agree_button"

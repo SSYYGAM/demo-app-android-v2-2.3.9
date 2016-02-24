@@ -23,7 +23,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.sea_monster.exception.BaseException;
 import com.sea_monster.exception.InternalException;
 import com.sea_monster.network.AbstractHttpRequest;
@@ -59,6 +58,7 @@ public class RegisterActivity extends BaseApiActivity implements View.OnClickLis
         mRegistEmail = (EditText) findViewById(R.id.et_register_mail);
         mRegistPassword = (EditText) findViewById(R.id.et_register_password);
         mRegistNickName = (EditText) findViewById(R.id.et_register_nickname);
+        mRegistTelePhone = (EditText) findViewById(R.id.et_register_telephone);
         mRegisteUserAgreement = (TextView) findViewById(R.id.register_user_agreement);
         mRegisteButton = (Button) findViewById(R.id.register_agree_button);
         mRegistReminder = (TextView) findViewById(R.id.de_regist_reminder);
@@ -317,6 +317,10 @@ public class RegisterActivity extends BaseApiActivity implements View.OnClickLis
      * 昵称
      */
     private EditText mRegistNickName;
+    /**
+     * 手机号
+     */
+    private EditText mRegistTelePhone;
     /**
      * 注册button
      */
