@@ -323,6 +323,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                     break;
                 case 3:
                     if (mCustomerFragment == null) {
+                      //  fragment = new FriendListFragment();
                         fragment = new CustomerFragment();
                     } else {
                         fragment = mCustomerFragment;
@@ -445,6 +446,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         switch (item.getItemId()) {
             case R.id.add_item1://发起聊天
                 startActivity(new Intent(this, FriendListActivity.class));
+                break;
+            case R.id.add_friend://添加好友
+                startActivity(new Intent(this, SearchFriendActivity.class));
                 break;
 //            case R.id.add_item2://选择群组
 //

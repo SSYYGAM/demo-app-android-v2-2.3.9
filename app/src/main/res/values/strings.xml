@@ -25,6 +25,7 @@
     <string name="main_chatroom">聊天室</string>
     <string name="main_customer">客服</string>
     <string name="add_chat">发起聊天</string>
+    <string name="add_friends">添加好友</string>
     <string name="add_select_group">选择群组</string>
     <string name="add_voip">网络电话</string>
     <string name="add_contacts">通讯录</string>
@@ -47,6 +48,8 @@
     <string name="register_input_email">"输入邮箱"</string>
     <string name="register_input_password">"输入密码"</string>
     <string name="register_input_nickname">"昵称"</string>
+    <string name="register_input_telephone">"手机号码"</string>
+    <string name="register_input_yzm">"验证码"</string>
     <string name="register_btn_argee">"注册"</string>
     <string name="register_email_error">"邮箱地址不合法"</string>
     <string name="login_success">"登录成功"</string>
@@ -126,6 +129,7 @@
 
     <!--public account -->
     <string name="public_account_search">"搜索"</string>
+    <string name="public_friends">"好友"</string>
     <string name="public_add_address">"添加好友"</string>
     <string name="friend_send">"好友请求已发送"</string>
     <string name="friend_send_success">"发送好友请求成功"</string>

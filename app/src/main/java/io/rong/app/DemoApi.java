@@ -40,7 +40,7 @@ import io.rong.imlib.model.UserInfo;
  */
 public class DemoApi extends BaseApi {
     //private static String HOST = "http://webim.demo.rong.io/";
-    private static String HOST = "http://192.168.1.107:8080/HttpWeb/";
+   private static String HOST = "http://192.168.1.107:8080/HttpWeb/";
     //private static String HOST = "http://182.61.23.167:8081/HttpWeb/";
     private final static String DEMO_LOGIN_EMAIL = "email_login";
     private final static String DEMO_LOGIN_EMAIL_TOKEN = "email_login_token";
@@ -52,7 +52,7 @@ public class DemoApi extends BaseApi {
     private final static String DEMO_GET_ALL_GROUP = "get_all_group";
     private final static String DEMO_GET_MY_GROUP = "get_my_group";
     private final static String DEMO_GET_GROUP = "get_group";
-    private final static String DEMO_SEARCH_NAME = "seach_name";
+    private final static String DEMO_SEARCH_NAME = "search_name";
     private final static String DEMO_GET_FRIEND = "get_friend";
     private final static String DEMO_REQUEST_FRIEND = "request_friend";
     private final static String DEMO_DELETE_FRIEND = "delete_friend";
@@ -63,8 +63,8 @@ public class DemoApi extends BaseApi {
     private HandlerThread mWorkThread;
     static Handler mHandler;
 
-    private Context mContext;
 
+    private Context mContext;
     public DemoApi(Context context) {
         super(NetworkManager.getInstance(), context);
         mContext = context;

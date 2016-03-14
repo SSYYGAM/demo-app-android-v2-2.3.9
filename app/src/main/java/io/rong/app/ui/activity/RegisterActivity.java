@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBar;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -30,6 +31,9 @@ import com.sea_monster.network.AbstractHttpRequest;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.bmob.sms.BmobSMS;
+import cn.bmob.sms.exception.BmobException;
+import cn.bmob.sms.listener.RequestSMSCodeListener;
 import io.rong.app.DemoContext;
 import io.rong.app.R;
 import io.rong.app.model.Status;
@@ -37,6 +41,7 @@ import io.rong.app.ui.widget.EditTextHolder;
 import io.rong.app.ui.widget.WinToast;
 import io.rong.app.utils.CommonUtils;
 import io.rong.app.utils.NetUtils;
+import io.rong.app.utils.StringFunction;
 
 /**
  * Created by Bob on 2015/2/6.
@@ -46,7 +51,8 @@ public class RegisterActivity extends BaseApiActivity implements View.OnClickLis
     private static final String TAG = RegisterActivity.class.getSimpleName();
     private static final int HANDLER_REGIST_HAS_NO_FOCUS = 1;
     private static final int HANDLER_REGIST_HAS_FOCUS = 2;
-
+    /***获取电话验证码*/
+    private Button Tele_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,10 +61,14 @@ public class RegisterActivity extends BaseApiActivity implements View.OnClickLis
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();//隐藏ActionBar
+        Tele_button=(Button)findViewById(R.id.Tele_button);
         mRegistEmail = (EditText) findViewById(R.id.et_register_mail);
+
         mRegistPassword = (EditText) findViewById(R.id.et_register_password);
         mRegistNickName = (EditText) findViewById(R.id.et_register_nickname);
         mRegistTelePhone = (EditText) findViewById(R.id.et_register_telephone);
+        mRegistTelePhoneYzm = (EditText) findViewById(R.id.et_register_yzm);
+        mRegistTelePhone.setInputType(InputType.TYPE_CLASS_PHONE);
         mRegisteUserAgreement = (TextView) findViewById(R.id.register_user_agreement);
         mRegisteButton = (Button) findViewById(R.id.register_agree_button);
         mRegistReminder = (TextView) findViewById(R.id.de_regist_reminder);
@@ -68,6 +78,8 @@ public class RegisterActivity extends BaseApiActivity implements View.OnClickLis
         mImgBackgroud = (ImageView) findViewById(R.id.de_img_backgroud);
         mIsShowTitle = (RelativeLayout) findViewById(R.id.de_merge_rel);
         mEmailDeleteFramelayout = (FrameLayout) findViewById(R.id.et_register_delete);
+        mTelephoneyzmDeleteFramelayout = (FrameLayout) findViewById(R.id.et_register_yzm_delete);
+        mTelephoneDeleteFramelayout = (FrameLayout) findViewById(R.id.et_telephone_delete);
         mPasswordDeleteFramelayout = (FrameLayout) findViewById(R.id.et_password_delete);
         mNickNameDeleteFramelayout = (FrameLayout) findViewById(R.id.et_nickname_delete);
         mHandler = new Handler(this);
@@ -87,7 +99,10 @@ public class RegisterActivity extends BaseApiActivity implements View.OnClickLis
         mRegisteUserAgreement.setOnClickListener(this);
         mLeftTitle.setOnClickListener(this);
         mRightTitle.setOnClickListener(this);
+        Tele_button.setOnClickListener(this);
         mEditUserNameEt = new EditTextHolder(mRegistEmail, mEmailDeleteFramelayout, null);
+        mEditTeleNameEt = new EditTextHolder(mRegistTelePhone, mTelephoneDeleteFramelayout, null);
+        mEditTeleYzm = new EditTextHolder(mRegistTelePhoneYzm, mTelephoneyzmDeleteFramelayout, null);
         mEditNickNameEt = new EditTextHolder(mRegistNickName, mNickNameDeleteFramelayout, null);
         mEditPassWordEt = new EditTextHolder(mRegistPassword, mPasswordDeleteFramelayout, null);
 
@@ -97,9 +112,12 @@ public class RegisterActivity extends BaseApiActivity implements View.OnClickLis
                 mRegistEmail.setOnClickListener(RegisterActivity.this);
                 mRegistNickName.setOnClickListener(RegisterActivity.this);
                 mRegistPassword.setOnClickListener(RegisterActivity.this);
+                mRegistTelePhone.setOnClickListener(RegisterActivity.this);
                 mEditUserNameEt.setmOnEditTextFocusChangeListener(RegisterActivity.this);
                 mEditNickNameEt.setmOnEditTextFocusChangeListener(RegisterActivity.this);
                 mEditPassWordEt.setmOnEditTextFocusChangeListener(RegisterActivity.this);
+                mEditTeleNameEt.setmOnEditTextFocusChangeListener(RegisterActivity.this);
+                mEditTeleYzm.setmOnEditTextFocusChangeListener(RegisterActivity.this);
             }
         }, 200);
     }
@@ -182,6 +200,26 @@ public class RegisterActivity extends BaseApiActivity implements View.OnClickLis
                 mess.what = HANDLER_REGIST_HAS_FOCUS;
                 mHandler.sendMessage(mess);
                 break;
+            case R.id.Tele_button:
+               if(!StringFunction.isMobile(mRegistTelePhone.getText().toString())){
+
+                   WinToast.toast(this, "手机号格式有误");
+                   //Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
+                   mRegistTelePhone.setFocusable(true);
+                   return;
+               }else{
+                   BmobSMS.requestSMSCode(getApplicationContext(), mRegistTelePhone.getText()+"", "mode1", new RequestSMSCodeListener() {
+
+                       @Override
+                       public void done(Integer smsId, BmobException ex) {
+                           // TODO Auto-generated method stub
+                           if (ex == null) {//验证码发送成功
+                               Log.i("bmob", "短信id：" + smsId);//用于查询本次短信发送详情
+                           }
+                       }
+                   });
+               }
+            break;
 
             case R.id.de_left://登录
                 startActivity(new Intent(this, LoginActivity.class));
@@ -322,6 +360,10 @@ public class RegisterActivity extends BaseApiActivity implements View.OnClickLis
      */
     private EditText mRegistTelePhone;
     /**
+     * 验证码
+     */
+    private EditText mRegistTelePhoneYzm;
+    /**
      * 注册button
      */
     private Button mRegisteButton;
@@ -332,7 +374,14 @@ public class RegisterActivity extends BaseApiActivity implements View.OnClickLis
     /**
      * 输入邮箱删除按钮
      */
-    private FrameLayout mEmailDeleteFramelayout;
+    private FrameLayout mEmailDeleteFramelayout;  /**
+     * 输入电话号码删除按钮
+     */
+    private FrameLayout mTelephoneDeleteFramelayout;
+    /**
+    * 输入验证码
+     */
+    private FrameLayout mTelephoneyzmDeleteFramelayout;
     /**
      * 输入密码删除按钮
      */
@@ -362,8 +411,10 @@ public class RegisterActivity extends BaseApiActivity implements View.OnClickLis
      */
     private ImageView mImgBackgroud;
     EditTextHolder mEditUserNameEt;
+    EditTextHolder mEditTeleNameEt;
     EditTextHolder mEditPassWordEt;
     EditTextHolder mEditNickNameEt;
+    EditTextHolder mEditTeleYzm;
     private Handler mHandler;
     /**
      * 软键盘的控制

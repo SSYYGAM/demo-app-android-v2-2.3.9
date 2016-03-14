@@ -4,6 +4,7 @@ import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 
+import cn.bmob.sms.BmobSMS;
 import io.rong.app.message.AgreedFriendRequestMessage;
 import io.rong.app.message.provider.ContactNotificationMessageProvider;
 import io.rong.app.message.provider.NewDiscussionConversationProvider;
@@ -34,6 +35,8 @@ public class App extends Application {
                 "io.rong.push".equals(getCurProcessName(getApplicationContext()))) {
 
             RongIM.init(this);
+            //bmob短信平台
+            BmobSMS.initialize(getApplicationContext(), "a46f2fbbe4b2aa8bce3cca98b776a632");
 
             /**
              * 融云SDK事件监听处理

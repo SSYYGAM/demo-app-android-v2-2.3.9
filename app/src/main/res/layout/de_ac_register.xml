@@ -101,7 +101,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="22dp"
             android:layout_marginRight="16dp"
-            android:layout_marginTop="10dp"
             android:padding="8dp">
 
             <EditText
@@ -139,7 +138,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="22dp"
             android:layout_marginRight="16dp"
-            android:layout_marginTop="10dp"
             android:padding="8dp">
 
             <EditText
@@ -175,7 +173,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="22dp"
             android:layout_marginRight="16dp"
-            android:layout_marginTop="10dp"
             android:padding="8dp">
 
             <EditText
@@ -186,7 +183,8 @@
                 android:layout_alignParentTop="true"
                 android:background="@drawable/rc_ed_public_service_search_selector"
                 android:gravity="left|center_vertical"
-                android:hint="@string/register_input_nickname"
+                android:hint="@string/register_input_telephone"
+                android:inputType="phone"
                 android:singleLine="true"
                 android:textColor="@android:color/white" />
 
@@ -204,7 +202,50 @@
                     android:padding="8dp"
                     android:src="@drawable/de_register_delete" />
             </FrameLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="22dp"
+            android:layout_marginRight="16dp"
+            android:padding="8dp"
+            android:orientation="horizontal"
+            >
+            <EditText
+                android:id="@+id/et_register_yzm"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rc_ed_public_service_search_selector"
+                android:gravity="left|center_vertical"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:hint="@string/register_input_yzm"
+                android:singleLine="true"
+                android:layout_marginRight="20dp"
+                android:textColor="@android:color/white" />
 
+            <FrameLayout
+                android:id="@+id/et_register_yzm_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/et_register_yzm"
+                android:layout_centerVertical="true"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:src="@drawable/de_register_delete" />
+            </FrameLayout>
+            <Button
+                android:id="@+id/Tele_button"
+                android:layout_width="60dp"
+                android:layout_alignParentRight="true"
+                android:layout_height="wrap_content"
+                android:text="验证码"
+                android:textSize="10sp"
+                />
         </RelativeLayout>
 
         <Button
