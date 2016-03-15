@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBar;
+import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -34,6 +36,7 @@ import java.util.Map;
 import cn.bmob.sms.BmobSMS;
 import cn.bmob.sms.exception.BmobException;
 import cn.bmob.sms.listener.RequestSMSCodeListener;
+import cn.bmob.sms.listener.VerifySMSCodeListener;
 import io.rong.app.DemoContext;
 import io.rong.app.R;
 import io.rong.app.model.Status;
@@ -53,6 +56,8 @@ public class RegisterActivity extends BaseApiActivity implements View.OnClickLis
     private static final int HANDLER_REGIST_HAS_FOCUS = 2;
     /***获取电话验证码*/
     private Button Tele_button;
+    /**验证码长度*/
+    private final int textsize = 6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +110,55 @@ public class RegisterActivity extends BaseApiActivity implements View.OnClickLis
         mEditTeleYzm = new EditTextHolder(mRegistTelePhoneYzm, mTelephoneyzmDeleteFramelayout, null);
         mEditNickNameEt = new EditTextHolder(mRegistNickName, mNickNameDeleteFramelayout, null);
         mEditPassWordEt = new EditTextHolder(mRegistPassword, mPasswordDeleteFramelayout, null);
+        mRegistTelePhone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                mRegistTelePhoneYzm.setEnabled(true);
+                Tele_button.setEnabled(true);
+            }
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        mRegistTelePhoneYzm.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String yzm = mRegistTelePhoneYzm.getText().toString();
+                if(yzm.length()==textsize){
+                    BmobSMS.verifySmsCode(getApplication(),mRegistTelePhone.getText().toString(), yzm, new VerifySMSCodeListener() {
+                        @Override
+                        public void done(BmobException ex) {
+                            // TODO Auto-generated method stub
+                            if(ex==null){//短信验证码已验证成功
+                                Log.i("bmob", "验证通过");
+                                mRegistTelePhoneYzm.setEnabled(false);
+                                Tele_button.setEnabled(false);
+                            }else{
+                                Log.i("bmob", "验证失败：code ="+ex.getErrorCode()+",msg = "+ex.getLocalizedMessage());
+                            }
+                        }
+                    });
+                }
+            }
+        });
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -175,7 +228,7 @@ public class RegisterActivity extends BaseApiActivity implements View.OnClickLis
             case R.id.register_agree_button://注册button
                 String email = mRegistEmail.getText().toString();
                 String password = mRegistPassword.getText().toString();
-                String phone = "123";
+                String phone = mRegistTelePhone.getText().toString();
                 String nickName = mRegistNickName.getText().toString();
 
                 if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || TextUtils.isEmpty(nickName)) {
@@ -183,6 +236,9 @@ public class RegisterActivity extends BaseApiActivity implements View.OnClickLis
                     return;
                 } else if (!CommonUtils.isEmail(email)) {
                     WinToast.toast(this, R.string.register_email_error);
+                    return;
+                }else  if(Tele_button.isEnabled()){
+                    WinToast.toast(this, R.string.register_get_yzm);
                     return;
                 }
                 if (DemoContext.getInstance() != null)
@@ -202,9 +258,7 @@ public class RegisterActivity extends BaseApiActivity implements View.OnClickLis
                 break;
             case R.id.Tele_button:
                if(!StringFunction.isMobile(mRegistTelePhone.getText().toString())){
-
                    WinToast.toast(this, "手机号格式有误");
-                   //Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
                    mRegistTelePhone.setFocusable(true);
                    return;
                }else{
