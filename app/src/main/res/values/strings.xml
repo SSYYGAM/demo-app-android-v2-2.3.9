@@ -50,6 +50,7 @@
     <string name="register_input_nickname">"昵称"</string>
     <string name="register_input_telephone">"手机号码"</string>
     <string name="register_input_yzm">"验证码"</string>
+    <string name="register_get_yzm">"请获取验证码"</string>
     <string name="register_btn_argee">"注册"</string>
     <string name="register_email_error">"邮箱地址不合法"</string>
     <string name="login_success">"登录成功"</string>
